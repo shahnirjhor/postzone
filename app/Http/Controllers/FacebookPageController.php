@@ -1,0 +1,85 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\FacebookPage;
+use Illuminate\Http\Request;
+
+class FacebookPageController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        //
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        //
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\FacebookPage  $facebookPage
+     * @return \Illuminate\Http\Response
+     */
+    public function show(FacebookPage $facebookPage)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\FacebookPage  $facebookPage
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(FacebookPage $facebookPage)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\FacebookPage  $facebookPage
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, FacebookPage $facebookPage)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\FacebookPage  $facebookPage
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(FacebookPage $facebookPage)
+    {
+        //
+    }
+}

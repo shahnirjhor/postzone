@@ -1,0 +1,29 @@
+.c-margin-right {
+    margin-right: 5px !important;
+}
+.dropify-wrapper{
+    max-height: 100px;
+}
+#input_address{
+    min-height: 58px;
+}
+
+#edit_input_address{
+    min-height: 58px;
+}
+
+#custom-sidebar-logo {
+    width: 40px;
+    height: 40px;
+}
+
+#logo-text-color {
+    color: #20aee3;
+    padding-left: 5px;
+}
+
+.ambitious-crimson{
+    color: #dc3545;
+    opacity: 70%;
+}
+
