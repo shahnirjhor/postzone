@@ -55,6 +55,7 @@ Route::post('/install',[
 Route::group(['middleware' => ['auth']], function() {
 
     Route::resources([
+        'facebook-apps' => App\Http\Controllers\FacebookAppController::class,
         'roles' => App\Http\Controllers\RoleController::class,
         'users' => App\Http\Controllers\UserController::class,
         'smtp' => App\Http\Controllers\SmtpConfigurationController::class,

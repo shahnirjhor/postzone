@@ -8,13 +8,35 @@ use Illuminate\Http\Request;
 class FacebookAppController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the resource
      *
-     * @return \Illuminate\Http\Response
+     * @access public
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $apps = $this->filter($request)->paginate(10)->withQueryString();
+        return view('facebook-app.index',compact('apps'));
+    }
+
+    /**
+     * Filter function
+     *
+     * @param Request $request
+     * @return Illuminate\Database\Eloquent\Builder
+     */
+    private function filter(Request $request)
+    {
+        $query = FacebookApp::orderBy('id','DESC');
+
+        if ($request->app_name)
+            $query->where('app_name', 'like', $request->app_name.'%');
+
+        if ($request->api_id)
+            $query->where('api_id', 'like', $request->api_id.'%');
+
+        return $query;
     }
 
     /**
