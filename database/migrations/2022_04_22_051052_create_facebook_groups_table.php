@@ -15,7 +15,15 @@ class CreateFacebookGroupsTable extends Migration
     {
         Schema::create('facebook_groups', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('facebook_user_id');
+            $table->string('group_id');
+            $table->text('group_cover')->nullable();
+            $table->text('group_profile')->nullable();
+            $table->string('group_name');
+            $table->text('group_access_token');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
