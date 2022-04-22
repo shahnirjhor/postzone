@@ -15,7 +15,19 @@ class CreateFacebookAppsTable extends Migration
     {
         Schema::create('facebook_apps', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id')->default(false);
+            $table->string('api_id');
+            $table->string('app_name')->nullable();
+            $table->string('api_secret');
+            $table->string('numeric_id')->nullable();
+            $table->string('user_access_token')->nullable();
+            $table->boolean('developer_access')->default(false);
+            $table->string('facebook_id')->nullable();
+            $table->string('secret_code')->nullable();
+            $table->enum('use_by', ['only_me', 'everyone'])->default('only_me');
+            $table->boolean('status')->default(true);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
