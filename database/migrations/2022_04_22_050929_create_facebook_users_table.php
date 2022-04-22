@@ -15,7 +15,15 @@ class CreateFacebookUsersTable extends Migration
     {
         Schema::create('facebook_users', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->string('config_id');
+            $table->string('access_token');
+            $table->string('name')->nullable();
+            $table->string('email')->nullable();
+            $table->string('facebook_id')->nullable();
+            $table->enum('need_to_delete', ['0', '1'])->default('0');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
