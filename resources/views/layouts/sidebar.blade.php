@@ -18,8 +18,10 @@ $RoleName = Auth::user()->getRoleNames();
                     </a>
                 </li>
 
-                <li> <a class="waves-effect waves-dark" href="#" aria-expanded="false"><i
-                    class="icon-Add"></i><span class="hide-menu">@lang('Connect Account')</span></a>
+                <li @if($c == 'connect-account') class="active" @endif>
+                    <a class="waves-effect waves-dark" href="{{ route('connect-account.index') }}" aria-expanded="false">
+                        <i class="icon-Add"></i><span class="hide-menu">@lang('Connect Account')</span>
+                    </a>
                 </li>
 
                 <li> <a class="waves-effect waves-dark" href="#" aria-expanded="false"><i
