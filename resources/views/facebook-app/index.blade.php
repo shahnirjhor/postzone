@@ -67,34 +67,37 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($apps as $app)
+                            @foreach ($apps['data'] as $app)
                                 <tr>
-                                    <td>{{ $app->id }}</td>
-                                    <td>{{ $app->app_name }}</td>
-                                    <td>{{ $app->api_id }}</td>
+                                    <td>{{ $app['id'] }}</td>
+                                    <td>{{ $app['app_name'] }}</td>
+                                    <td>{{ $app['api_id'] }}</td>
                                     <td>
-                                        @if($app->status)
+                                        @if($app['token_validity'] == 'valid')
+                                            <span class="badge badge-success">@lang('Valid')</span>
+                                        @elseif ($app['token_validity'] == 'expired')
+                                            <span class="badge badge-warning">@lang('Expired')</span>
+                                        @else
+                                            <span class="badge badge-danger">@lang('Invalid')</span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if($app['status'])
                                             <span class="badge badge-success">@lang('Active')</span>
                                         @else
                                             <span class="badge badge-danger">@lang('Inactive')</span>
                                         @endif
                                     </td>
                                     <td>
-                                        @if($app->status)
-                                            <span class="badge badge-success">@lang('Active')</span>
-                                        @else
-                                            <span class="badge badge-danger">@lang('Inactive')</span>
-                                        @endif
-                                    </td>
-                                    <td>
-                                        <a href="{{ route('facebook-apps.edit', $app->id) }}" data-toggle="tooltip" data-original-title="Edit"> <i class="fa fa-pencil text-inverse m-r-10"></i> </a>
-                                        <a href="javascript:void(0)" data-href="{{ route('facebook-apps.destroy', $user->id) }}" data-toggle="modal" data-target="#myModal" title="Delete"><i class="fa fa-trash text-danger"></i></a>
+                                        <a href="{{ route('facebook-apps.fbLogin', $app['id']) }}" data-toggle="tooltip" data-original-title="Facebook Login"> <i class="fa fa-sign-in text-inverse m-r-10"></i> </a>
+                                        <a href="{{ route('facebook-apps.edit', $app['id']) }}" data-toggle="tooltip" data-original-title="Edit"> <i class="fa fa-pencil text-inverse m-r-10"></i> </a>
+                                        <a href="javascript:void(0)" data-href="{{ route('facebook-apps.destroy', $app['id']) }}" data-toggle="modal" data-target="#myModal" title="Delete"><i class="fa fa-trash text-danger"></i></a>
                                     </td>
                                 </tr>
                             @endforeach
                         </tbody>
                     </table>
-                    {{ $apps->links() }}
+                    {{-- {{ $apps->links() }} --}}
                 </div>
             </div>
         </div>

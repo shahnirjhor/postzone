@@ -53,6 +53,17 @@ Route::post('/install',[
 
 
 Route::group(['middleware' => ['auth']], function() {
+    Route::get('/facebook-apps/fbLogin/{id}',[
+        'uses' => 'App\Http\Controllers\FacebookAppController@fbLogin',
+        'as' => 'facebook-apps.fbLogin'
+    ]);
+
+    Route::get('/fb-login-callback', [App\Http\Controllers\CallbackController::class, 'loginCallback']);
+
+    Route::get('/connect-account/index',[
+        'uses' => 'App\Http\Controllers\ConnectAccountController@index',
+        'as' => 'connect-account.index'
+    ]);
 
     Route::resources([
         'facebook-apps' => App\Http\Controllers\FacebookAppController::class,
