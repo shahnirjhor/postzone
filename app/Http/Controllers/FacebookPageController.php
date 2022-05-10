@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\FacebookPage;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class FacebookPageController extends Controller
 {
@@ -80,6 +81,14 @@ class FacebookPageController extends Controller
      */
     public function destroy(FacebookPage $facebookPage)
     {
-        //
+        DB::beginTransaction();
+        try {
+            $facebookPage->delete();
+            DB::commit();
+            return redirect()->route('connect-account.index')->with('success', trans('Facebook Page Deleted Successfully'));
+        } catch (\Exception $e) {
+            DB::rollback();
+            return redirect()->route('connect-account.index')->with('error',$e);
+        }
     }
 }

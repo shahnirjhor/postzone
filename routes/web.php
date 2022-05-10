@@ -60,6 +60,8 @@ Route::group(['middleware' => ['auth']], function() {
 
     Route::get('/fb-login-callback', [App\Http\Controllers\CallbackController::class, 'loginCallback']);
 
+    Route::get('/refresh-token-callback', [App\Http\Controllers\CallbackController::class, 'refreshTokenCallback']);
+
     Route::get('/connect-account/index',[
         'uses' => 'App\Http\Controllers\ConnectAccountController@index',
         'as' => 'connect-account.index'
@@ -67,6 +69,8 @@ Route::group(['middleware' => ['auth']], function() {
 
     Route::resources([
         'facebook-apps' => App\Http\Controllers\FacebookAppController::class,
+        'facebook-users' => App\Http\Controllers\FacebookUserController::class,
+        'facebook-pages' => App\Http\Controllers\FacebookPageController::class,
         'roles' => App\Http\Controllers\RoleController::class,
         'users' => App\Http\Controllers\UserController::class,
         'smtp' => App\Http\Controllers\SmtpConfigurationController::class,

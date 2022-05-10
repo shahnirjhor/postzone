@@ -79,6 +79,8 @@ class ConnectAccountController extends Controller
             $data['existingFbAccounts'] = '0';
         }
 
+        // dd($data);
+
         return view('connect-account.index', compact('data'));
     }
 

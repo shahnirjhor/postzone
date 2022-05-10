@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\FacebookUser;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class FacebookUserController extends Controller
 {
@@ -80,6 +81,15 @@ class FacebookUserController extends Controller
      */
     public function destroy(FacebookUser $facebookUser)
     {
-        //
+        DB::beginTransaction();
+        try {
+            $facebookUser->delete();
+            DB::table("facebook_pages")->where('facebook_user_id',$facebookUser->id)->delete();
+            DB::commit();
+            return redirect()->route('connect-account.index')->with('success', trans('Facebook Account Deleted Successfully'));
+        } catch (\Exception $e) {
+            DB::rollback();
+            return redirect()->route('connect-account.index')->with('error',$e);
+        }
     }
 }

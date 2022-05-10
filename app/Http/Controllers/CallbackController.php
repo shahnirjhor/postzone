@@ -55,6 +55,53 @@ class CallbackController extends Controller
     }
 
     /**
+     * refresh token callback
+     *
+     * @param Request $request
+     * @return Illuminate\Http\Response;
+     */
+    public function refreshTokenCallback(Request $request)
+    {
+        $redirectUrl = url('/refresh-token-callback');
+        $userFbAppIdStr = $request->state;
+        $userFbAppIdArray = explode("_", $userFbAppIdStr);
+        $userId = $userFbAppIdArray[0];
+        $fbAppId = $userFbAppIdArray[1];
+
+        $facebookApp = FacebookApp::find($fbAppId);
+        $callbackResponse = Http::get('https://graph.facebook.com/v13.0/oauth/access_token?client_id=' . $facebookApp->api_id . '&redirect_uri=' . urlencode($redirectUrl) . '&client_secret=' . $facebookApp->api_secret . '&code=' . $request->code);
+        $callbackResponseObject = $callbackResponse->object();
+
+        $nextFb =  new NextFacebook($facebookApp);
+        $response = $nextFb->loginCallback($callbackResponseObject->access_token);
+
+        if (isset($response['error'])) {
+            return redirect()->route('connect-account.index')->with('error', $response['error']['message']);
+        } else {
+            $accessToken = $response['accessToken'];
+            $permission = $nextFb->debugAccessToken($accessToken);
+            $givenPermission = array();
+            if (isset($permission['data']['scopes'])) {
+                $permissionChecking = array();
+                $neededPermission = array('email','public_profile','pages_show_list','pages_manage_posts','publish_to_groups');
+                $givenPermission = $permission['data']['scopes'];
+                $permissionChecking = array_intersect($neededPermission, $givenPermission);
+                if (empty($permissionChecking)) {
+                    return redirect()->route('connect-account.index')->with('success', trans("Sorry, You didn't confirm the request yet. Please login to your fb account and accept the request."));
+                }
+            }
+
+            if (isset($accessToken)) {
+                $facebookUserId = $this->updateOrCreateFbUser($userId, $fbAppId, $accessToken, $response);
+                $pageList = $nextFb->getPageList($accessToken);
+                if (!empty($pageList))
+                    $this->updateOrCreateFbPage($userId, $pageList, $facebookUserId);
+            }
+            return redirect()->route('connect-account.index')->with('success', trans('Token Successfully Refresh'));
+        }
+    }
+
+    /**
      * update or create fb user
      *
      * @param [type] $userId

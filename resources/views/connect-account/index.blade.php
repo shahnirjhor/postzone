@@ -9,7 +9,7 @@
         </h3>
     </div>
 </div>
-@if ($data['existingFbAccounts'] != '0')
+@if ($data['existingFbAccounts'] != null)
 <div>
     @if ($data['showConnectAccountBox'] == 1)
     <div class="row">
@@ -33,7 +33,7 @@
                 <div class="widget-user-header bg-aqua-active" >
                     <h3 class="widget-user-username pull-left con-user-name"><i class="fa fa-facebook"></i> <?php echo $value['name']; ?></h3>
                     <div class="box-tools pull-right">
-                        <button type="button" class="delete_account btn btn-box-tool" table_id="<?php echo $value['fb_user_table_id']; ?>"><i class="fa fa-trash fa-2x con-user-name"></i></button>
+                        <a href="javascript:void(0)" data-href="{{ route('facebook-users.destroy', $value['fb_user_table_id']) }}" data-toggle="modal" data-target="#myModal" title="Delete"><i class="fa fa-trash fa-2x con-user-name"></i></a>
                     </div>
                 </div>
                 <div class="widget-user-image">
@@ -61,7 +61,7 @@
                             <div class="col-xs-12 col-sm-12 col-md-4 text-center">
                                 <div class="row">
                                     <div class="col-xs-12 col-sm-12 col-md-12">
-                                        <button table_id="<?php echo $page_info['id']; ?>" type="button" class="btn btn-outline-danger"><i class="fa fa-trash"></i></button>
+                                        <a class="btn btn-outline-danger" href="javascript:void(0)" data-href="{{ route('facebook-pages.destroy', $page_info['id']) }}" data-toggle="modal" data-target="#myModal" title="Delete"><i class="fa fa-trash"></i></a>
                                     </div>
                                 </div>
                             </div>
@@ -82,4 +82,5 @@
     </div>
 </div>
 @endif
+@include('layouts.delete_modal')
 @endsection
